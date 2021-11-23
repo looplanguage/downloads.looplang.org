@@ -4,7 +4,7 @@
 }
 
 .table thead {
-  background: rgb(40, 40, 40);
+  background: #3b3ff5;
   color: white;
 }
 
@@ -13,7 +13,7 @@
 }
 
 .table a {
-  color: rgb(0, 0, 200);
+  color: #3b3ff5;
 }
 
 .table a:hover {
@@ -26,7 +26,7 @@
 
 .expand_category {
   color: white;
-  background: rgb(80, 80, 80);
+  background: #6191f2;
   padding: 5px 10px 5px 10px;
 }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../../styles/AllDownloads.module.css";
 
 function ArrowDown() {
@@ -17,12 +17,32 @@ function ArrowUp() {
   );
 }
 
+function FormatDate(_date) {
+  let date = new Date(_date);
+
+  return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+}
+
 export default function AllDownloads() {
   let [stableReleases, setStableReleases] = useState([]);
   let [prereleases, setPrereleases] = useState([]);
 
   let [stableExpanded, setStableExpanded] = useState(true);
   let [prereleaseExpanded, setPrereleaseExpanded] = useState(true);
+
+  const fetchData = async () => {
+    const response = await fetch("/api/prereleases");
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    const releases = await response.json();
+    return setPrereleases(releases);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -31,7 +51,7 @@ export default function AllDownloads() {
         <table className={styles.table}>
           <thead>
             <tr>
-              <td width={"20%"}>Version</td>
+              <td width={"10%"}>Version</td>
               <td width={"20%"}>Released</td>
               <td width={"20%"}>Platform</td>
               <td width={"20%"}>Installer</td>
@@ -66,15 +86,23 @@ export default function AllDownloads() {
             </tr>
           </tbody>
           <tbody className={!prereleaseExpanded && styles.hidden}>
-            <tr>
-              <td>0.1.0-abcdef</td>
-              <td>23-11-2021</td>
-              <td>Windows</td>
-              <td>None Available</td>
-              <td>
-                <a href="#">loop.exe</a>
-              </td>
-            </tr>
+            {prereleases.map((prerelease) => (
+              <tr key={prerelease.build}>
+                <td>
+                  {prerelease.version}-{prerelease.build}
+                </td>
+                <td>{FormatDate(prerelease.built)}</td>
+                <td>{prerelease.platform}</td>
+                <td>None Available</td>
+                <td>
+                  {prerelease.downloads.map((download) => (
+                    <a key={download.url} href={download.url}>
+                      {download.filename}
+                    </a>
+                  ))}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
