@@ -44,7 +44,9 @@ async function getAllObjects(continuationKey, response) {
 export default async function handler(req, res) {
   let response = await getAllObjects("", []);
 
-  response = response.sort((a, b) => b.key.localeCompare(a.key));
+  response = response.sort((a, b) => {
+    return b.build - a.build;
+  });
 
   res.send(response);
 }
