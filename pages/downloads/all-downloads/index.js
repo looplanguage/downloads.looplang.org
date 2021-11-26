@@ -20,7 +20,16 @@ function ArrowUp() {
 function FormatDate(_date) {
   let date = new Date(_date);
 
-  return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  return (
+    <span>
+      <span className={styles.date}>
+        {("0" + date.getDay()).slice(-2)}-{("0" + date.getMonth()).slice(-2)}-{date.getFullYear()}
+      </span>
+      <span>
+        {("0" + date.getHours()).slice(-2)}:{("0" + date.getMinutes()).slice(-2)}
+      </span>
+    </span>
+  );
 }
 
 export default function AllDownloads() {
@@ -52,9 +61,9 @@ export default function AllDownloads() {
           <thead>
             <tr>
               <td width={"10%"}>Version</td>
-              <td width={"20%"}>Released</td>
+              <td width={"10%"}>Build</td>
+              <td width={"30%"}>Released</td>
               <td width={"20%"}>Platform</td>
-              <td width={"20%"}>Installer</td>
               <td width={"20%"}>Binary</td>
             </tr>
           </thead>
@@ -88,14 +97,12 @@ export default function AllDownloads() {
           <tbody className={!prereleaseExpanded && styles.hidden}>
             {prereleases.map((prerelease) => (
               <tr key={prerelease.build}>
-                <td>
-                  {prerelease.version}-{prerelease.build}
-                </td>
+                <td>{prerelease.version}</td>
+                <td>{prerelease.build}</td>
                 <td>{FormatDate(prerelease.released)}</td>
                 <td>
                   {prerelease.os} {prerelease.architecture}
                 </td>
-                <td>None Available</td>
                 <td>
                   <a href={prerelease.link}>{prerelease.filename}</a>
                 </td>
