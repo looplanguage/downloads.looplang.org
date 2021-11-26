@@ -97,7 +97,7 @@ export default function AllDownloads() {
                 </td>
                 <td>None Available</td>
                 <td>
-                  <a href={"/api/download/" + prerelease.key}>{prerelease.filename}</a>
+                  <a href={prerelease.link}>{prerelease.filename}</a>
                 </td>
               </tr>
             ))}
