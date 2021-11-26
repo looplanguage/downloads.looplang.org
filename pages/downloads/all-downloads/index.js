@@ -91,15 +91,13 @@ export default function AllDownloads() {
                 <td>
                   {prerelease.version}-{prerelease.build}
                 </td>
-                <td>{FormatDate(prerelease.built)}</td>
-                <td>{prerelease.platform}</td>
+                <td>{FormatDate(prerelease.released)}</td>
+                <td>
+                  {prerelease.os} {prerelease.architecture}
+                </td>
                 <td>None Available</td>
                 <td>
-                  {prerelease.downloads.map((download) => (
-                    <a key={download.url} href={download.url}>
-                      {download.filename}
-                    </a>
-                  ))}
+                  <a href={"/api/download/" + prerelease.key}>{prerelease.filename}</a>
                 </td>
               </tr>
             ))}
