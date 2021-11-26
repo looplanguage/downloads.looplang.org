@@ -6,6 +6,10 @@ function AllDownloads({ prereleases }) {
   let [stableExpanded, setStableExpanded] = useState(true);
   let [prereleaseExpanded, setPrereleaseExpanded] = useState(true);
 
+  if (!prereleases) {
+    return <div>Loading...</div>;
+  }
+
   function FormatDate(_date) {
     let date = new Date(_date);
 
@@ -46,7 +50,7 @@ function AllDownloads({ prereleases }) {
               </td>
             </tr>
           </tbody>
-          <tbody className={!stableExpanded && styles.hidden}>
+          <tbody className={!stableExpanded ? styles.hidden : undefined}>
             <tr>
               <td colSpan={5}>None available</td>
             </tr>
@@ -62,7 +66,7 @@ function AllDownloads({ prereleases }) {
               </td>
             </tr>
           </tbody>
-          <tbody className={!prereleaseExpanded && styles.hidden}>
+          <tbody className={!prereleaseExpanded ? styles.hidden : undefined}>
             {prereleases.map((prerelease) => (
               <tr key={prerelease.build}>
                 <td>{prerelease.version}</td>
