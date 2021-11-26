@@ -39,3 +39,8 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.date {
+  font-weight: bold;
+  padding-right: 15px;
+}
