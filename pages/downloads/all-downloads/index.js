@@ -1,57 +1,29 @@
 import { useEffect, useState } from "react";
 import styles from "../../../styles/AllDownloads.module.css";
+import { ArrowDown, ArrowUp } from "../../../utils/arrows";
 
-function ArrowDown() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-    </svg>
-  );
-}
-
-function ArrowUp() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" viewBox="0 0 20 20" fill="currentColor">
-      <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
-    </svg>
-  );
-}
-
-function FormatDate(_date) {
-  let date = new Date(_date);
-
-  return (
-    <span>
-      <span className={styles.date}>
-        {("0" + date.getDay()).slice(-2)}-{("0" + date.getMonth()).slice(-2)}-{date.getFullYear()}
-      </span>
-      <span>
-        {("0" + date.getHours()).slice(-2)}:{("0" + date.getMinutes()).slice(-2)}
-      </span>
-    </span>
-  );
-}
-
-export default function AllDownloads() {
-  let [stableReleases, setStableReleases] = useState([]);
-  let [prereleases, setPrereleases] = useState([]);
-
+function AllDownloads({ prereleases }) {
   let [stableExpanded, setStableExpanded] = useState(true);
   let [prereleaseExpanded, setPrereleaseExpanded] = useState(true);
 
-  const fetchData = async () => {
-    const response = await fetch("/api/prereleases");
+  if (!prereleases) {
+    return <div>Loading...</div>;
+  }
 
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    const releases = await response.json();
-    return setPrereleases(releases);
-  };
+  function FormatDate(_date) {
+    let date = new Date(_date);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+    return (
+      <span>
+        <span className={styles.date}>
+          {("0" + date.getDay()).slice(-2)}-{("0" + date.getMonth()).slice(-2)}-{date.getFullYear()}
+        </span>
+        <span>
+          {("0" + date.getHours()).slice(-2)}:{("0" + date.getMinutes()).slice(-2)}
+        </span>
+      </span>
+    );
+  }
 
   return (
     <div>
@@ -78,7 +50,7 @@ export default function AllDownloads() {
               </td>
             </tr>
           </tbody>
-          <tbody className={!stableExpanded && styles.hidden}>
+          <tbody className={!stableExpanded ? styles.hidden : undefined}>
             <tr>
               <td colSpan={5}>None available</td>
             </tr>
@@ -94,7 +66,7 @@ export default function AllDownloads() {
               </td>
             </tr>
           </tbody>
-          <tbody className={!prereleaseExpanded && styles.hidden}>
+          <tbody className={!prereleaseExpanded ? styles.hidden : undefined}>
             {prereleases.map((prerelease) => (
               <tr key={prerelease.build}>
                 <td>{prerelease.version}</td>
@@ -114,3 +86,5 @@ export default function AllDownloads() {
     </div>
   );
 }
+
+export default AllDownloads;

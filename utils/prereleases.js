@@ -29,7 +29,7 @@ async function getAllObjects(continuationKey, response) {
       architecture,
       version,
       filename,
-      released,
+      released: released.getTime(),
       link,
     });
   });
@@ -41,12 +41,12 @@ async function getAllObjects(continuationKey, response) {
   return response;
 }
 
-export default async function handler(req, res) {
+export async function allObjects() {
   let response = await getAllObjects("", []);
 
   response = response.sort((a, b) => {
     return b.build - a.build;
   });
 
-  res.send(response);
+  return response;
 }
