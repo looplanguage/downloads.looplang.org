@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "../../../styles/AllDownloads.module.css";
-import { ArrowDown, ArrowUp } from "./arrows";
+import { ArrowDown, ArrowUp } from "../../../utils/arrows";
 
 function AllDownloads({ prereleases }) {
   let [stableExpanded, setStableExpanded] = useState(true);

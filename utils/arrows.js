@@ -13,12 +13,3 @@ export function ArrowUp() {
     </svg>
   );
 }
-
-export default function Arrows() {
-  return (
-    <div>
-      <ArrowUp />
-      <ArrowDown />
-    </div>
-  );
-}
