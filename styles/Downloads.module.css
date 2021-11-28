@@ -10,13 +10,14 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  background-color: rgb(220, 220, 220);
+  background-color: #393e41;
   border: none;
   border-radius: 10px;
   flex-basis: 0;
   flex-grow: 1;
   padding: 10px 5px 10px 5px;
   transition: all 0.1s;
+  color: #f6f7eb;
 }
 
 .header_button .tooltiptext {
@@ -63,6 +64,12 @@
 .header_button svg {
   height: 64px;
   width: 64px;
+  fill: #f6f7eb;
+}
+
+.header_button:hover {
+  cursor: pointer;
+  background-color: #6191f2;
 }
 
 @media only screen and (min-width: 1800px) {

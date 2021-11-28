@@ -30,15 +30,6 @@ function AllDownloads({ prereleases }) {
       <h2>All Releases</h2>
       <div style={{ overflowX: "auto" }}>
         <table className={styles.table}>
-          <thead>
-            <tr>
-              <td width={"10%"}>Version</td>
-              <td width={"10%"}>Build</td>
-              <td width={"30%"}>Released</td>
-              <td width={"20%"}>Platform</td>
-              <td width={"20%"}>Binary</td>
-            </tr>
-          </thead>
           <tbody
             onClick={() => {
               setStableExpanded(!stableExpanded);
@@ -51,6 +42,13 @@ function AllDownloads({ prereleases }) {
             </tr>
           </tbody>
           <tbody className={!stableExpanded ? styles.hidden : undefined}>
+            <tr className={styles.header}>
+              <td width={"10%"}>Version</td>
+              <td width={"10%"}>Build</td>
+              <td width={"30%"}>Released</td>
+              <td width={"20%"}>Platform</td>
+              <td width={"20%"}>Binary</td>
+            </tr>
             <tr>
               <td colSpan={5}>None available</td>
             </tr>
@@ -67,6 +65,13 @@ function AllDownloads({ prereleases }) {
             </tr>
           </tbody>
           <tbody className={!prereleaseExpanded ? styles.hidden : undefined}>
+            <tr className={styles.header}>
+              <td width={"10%"}>Version</td>
+              <td width={"10%"}>Build</td>
+              <td width={"30%"}>Released</td>
+              <td width={"20%"}>Platform</td>
+              <td width={"20%"}>Binary</td>
+            </tr>
             {prereleases.map((prerelease) => (
               <tr key={prerelease.build}>
                 <td>{prerelease.version}</td>

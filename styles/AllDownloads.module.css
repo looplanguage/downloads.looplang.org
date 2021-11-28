@@ -3,8 +3,8 @@
   border-collapse: collapse;
 }
 
-.table thead {
-  background: #3b3ff5;
+.table .header {
+  background: #6191f2;
   color: white;
 }
 
@@ -13,11 +13,12 @@
 }
 
 .table a {
-  color: #3b3ff5;
+  color: #3f88c5;
+  transition: all 0.1s;
 }
 
 .table a:hover {
-  color: rgb(0, 0, 100);
+  color: #e94f37;
 }
 
 .hidden {
@@ -26,7 +27,7 @@
 
 .expand_category {
   color: white;
-  background: #6191f2;
+  background: #393e41;
   padding: 5px 10px 5px 10px;
 }
 
