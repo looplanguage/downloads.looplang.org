@@ -13,10 +13,12 @@ function AllDownloads({ prereleases }) {
   function FormatDate(_date) {
     let date = new Date(_date);
 
+    console.log(date);
+
     return (
       <span>
         <span className={styles.date}>
-          {("0" + date.getDay()).slice(-2)}-{("0" + date.getMonth()).slice(-2)}-{date.getFullYear()}
+          {date.getDate().toString().padStart(2, "0")}-{(date.getMonth() + 1).toString().padStart(2, "0")}-{date.getFullYear()}
         </span>
         <span>
           {("0" + date.getHours()).slice(-2)}:{("0" + date.getMinutes()).slice(-2)}
@@ -72,19 +74,23 @@ function AllDownloads({ prereleases }) {
               <td width={"20%"}>Platform</td>
               <td width={"20%"}>Binary</td>
             </tr>
-            {prereleases.map((prerelease) => (
-              <tr key={prerelease.build}>
-                <td>{prerelease.version}</td>
-                <td>{prerelease.build}</td>
-                <td>{FormatDate(prerelease.released)}</td>
-                <td>
-                  {prerelease.os} {prerelease.architecture}
-                </td>
-                <td>
-                  <a href={prerelease.link}>{prerelease.filename}</a>
-                </td>
-              </tr>
-            ))}
+            {prereleases.map((prerelease) =>
+              prerelease.map((release) => {
+                return (
+                  <tr key={release.build}>
+                    <td>{release.version}</td>
+                    <td>{release.build}</td>
+                    <td>{FormatDate(release.released)}</td>
+                    <td>
+                      {release.os} {release.architecture}
+                    </td>
+                    <td>
+                      <a href={release.link}>{release.filename}</a>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>

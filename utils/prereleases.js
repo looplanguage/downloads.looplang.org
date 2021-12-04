@@ -9,7 +9,9 @@ async function getAllObjects(continuationKey, response) {
   });
 
   result.Contents.map((object) => {
-    const key = object.Key;
+    const dlLink = object.Key;
+    let key = object.Key;
+    key = key.replace("x86_64", "x86-64");
     const parts = key.split("_");
 
     const build = parts[0].replace("prerelease/", "");
@@ -20,7 +22,7 @@ async function getAllObjects(continuationKey, response) {
     const filename = parts[3] + (extension && "." + extension);
     const released = object.LastModified;
 
-    const link = "https://cdn.looplang.org/" + key;
+    const link = "https://cdn.looplang.org/" + dlLink;
 
     response.push({
       key,
@@ -48,5 +50,25 @@ export async function allObjects() {
     return b.build - a.build;
   });
 
-  return response;
+  let orderedResponse = [];
+  let index = 0;
+
+  for (let release of response) {
+    if (!orderedResponse[index]) {
+      orderedResponse[index] = [];
+      orderedResponse[index].push(release);
+    } else {
+      if (orderedResponse[index].build == release.build) {
+        orderedResponse[index].push(release);
+      } else {
+        index += 1;
+        orderedResponse[index] = [];
+        orderedResponse[index].push(release);
+      }
+    }
+  }
+
+  //console.log(orderedResponse);
+
+  return orderedResponse;
 }
