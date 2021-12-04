@@ -9,6 +9,7 @@ async function getAllObjects(continuationKey, response) {
   });
 
   result.Contents.map((object) => {
+    const dlLink = object.Key;
     let key = object.Key;
     key = key.replace("x86_64", "x86-64");
     const parts = key.split("_");
@@ -21,7 +22,7 @@ async function getAllObjects(continuationKey, response) {
     const filename = parts[3] + (extension && "." + extension);
     const released = object.LastModified;
 
-    const link = "https://cdn.looplang.org/" + key;
+    const link = "https://cdn.looplang.org/" + dlLink;
 
     response.push({
       key,
